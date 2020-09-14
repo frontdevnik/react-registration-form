@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MainWrapper /> should render correctly 1`] = `"<main class=\\"mainWrapper\\"><h1>Stub</h1></main>"`;

@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MainInput /> should render correctly 1`] = `"<footer class=\\"footer\\"><a class=\\"waves-effect waves-light btn-large\\" href=\\"/registration\\">Registration</a><a class=\\"waves-effect waves-light btn-large disabled\\" href=\\"/registration-questions\\">Registration-questions</a><a class=\\"waves-effect waves-light btn-large disabled\\" href=\\"/registration-info\\">Registration-info</a></footer>"`;

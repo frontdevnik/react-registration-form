@@ -1,0 +1,12 @@
+#root {
+  background-image: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
+}
+
+.form {
+  margin: 0 auto;
+  width: 70%;
+}
+
+input::-webkit-input-placeholder {
+  color: grey
+}
