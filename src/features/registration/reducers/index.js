@@ -1,11 +1,22 @@
+import { checkAllItemsIsValid } from '../helpers';
 import { SET_REGISTRATION_FIELD, SUBMIT_REGISTRATION_FORM } from '../constants';
 
-const initialState = {
-  first_name: { value: '', isRequired: false, errorMessage: '', isValid: false },
+export const initialState = {
+  first_name: {
+    value: '',
+    isRequired: false,
+    errorMessage: '',
+    isValid: false,
+  },
   last_name: { value: '', isRequired: false, errorMessage: '', isValid: false },
   email: { value: '', isRequired: false, errorMessage: '', isValid: false },
   password: { value: '', isRequired: false, errorMessage: '', isValid: false },
-  repeat_password: { value: '', isRequired: false, errorMessage: '', isValid: false },
+  repeat_password: {
+    value: '',
+    isRequired: false,
+    errorMessage: '',
+    isValid: false,
+  },
   isFormValid: false,
 };
 
@@ -18,11 +29,7 @@ export default (state = initialState, { type, payload }) => {
         [name]: { value, isRequired, errorMessage, isValid },
       };
     case SUBMIT_REGISTRATION_FORM:
-      const stateFields = ({isFormValid, ...rest}) => rest;
-      return {
-        ...state,
-        isFormValid: Object.values(stateFields(state)).every(item => item.isValid),
-      };
+      return checkAllItemsIsValid(state);
     default:
       return state;
   }

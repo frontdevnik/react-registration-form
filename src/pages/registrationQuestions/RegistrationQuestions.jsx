@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import MainWrapper from '../../components/mainWrapper';
 import Breadcrumbs from '../../components/navigations';
 import RegistrationQuestions from '../../components/registrationQuestions';
-import { setRegistrationInfoField } from '../../features/registrationInfo/actions';
 
 import {
   setRegistrationQuestionsField,

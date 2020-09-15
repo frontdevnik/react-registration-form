@@ -1,10 +1,10 @@
-import { cutFormValidField } from '../../../helpers/cutIsFormValidField';
+import { checkAllItemsIsValid } from '../helpers';
 import {
   SET_REGISTRATION_QUESTIONS_FIELD,
   SUBMIT_REGISTRATION_QUESTIONS_FORM,
 } from '../constants';
 
-const initialState = {
+export const initialState = {
   question_one: { questionText: '', answer: '' },
   question_two: { questionText: '', answer: '' },
   question_three: { questionText: '', answer: '' },
@@ -20,13 +20,7 @@ export default (state = initialState, { type, payload }) => {
         [name]: { questionText, answer },
       };
     case SUBMIT_REGISTRATION_QUESTIONS_FORM:
-      const stateFields = cutFormValidField(state);
-      return {
-        ...state,
-        isFormValid: Object.values(stateFields).every(
-          (item) => item.answer
-        ),
-      };
+      return checkAllItemsIsValid(state);
     default:
       return state;
   }
