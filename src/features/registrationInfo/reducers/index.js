@@ -1,29 +1,17 @@
-import { cutFormValidField } from '../../../helpers/cutIsFormValidField';
-import {
-  SET_REGISTRATION_INFO_FIELD,
-  SUBMIT_REGISTRATION_INFO_FORM,
-} from '../constants';
+import { SUBMIT_REGISTRATION_INFO_FORM } from '../constants';
 
-const initialState = {
-  birthday: { value: '' },
-  lunchtime: { value: '' },
+export const initialState = {
+  birthday: '',
+  lunchtime: '',
+  range: '',
+  radio_answer: '',
   isFormValid: false,
 };
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case SET_REGISTRATION_INFO_FIELD:
-      const { name, value } = payload;
-      return {
-        ...state,
-        [name]: { value },
-      };
     case SUBMIT_REGISTRATION_INFO_FORM:
-      const stateFields = cutFormValidField(state);
-      return {
-        ...state,
-        isFormValid: Object.values(stateFields).every((item) => item.value),
-      };
+      return { ...state, ...payload, isFormValid: true };
     default:
       return state;
   }

@@ -6,26 +6,24 @@ import Breadcrumbs from '../../components/navigations';
 import Registration from '../../components/registration';
 
 import {
-  setRegistrationField,
   submitRegistrationForm,
+  differentPasswords,
 } from '../../features/registration/actions';
 
 export default () => {
   const dispatch = useDispatch();
 
-  const handleInput = ({ name, value, isRequired, errorMessage, isValid }) => {
-    dispatch(setRegistrationField({ name, value, isRequired, errorMessage, isValid }));
-  };
+  const handleSubmit = (data) => {
+    const { password, repeat_password } = data;
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    dispatch(submitRegistrationForm());
+    password !== repeat_password
+      ? dispatch(differentPasswords())
+      : dispatch(submitRegistrationForm(data));
   };
 
   return (
     <MainWrapper>
-      <Registration handleSubmit={handleSubmit} handleInput={handleInput} />
+      <Registration onSubmit={handleSubmit} />
       <Breadcrumbs />
     </MainWrapper>
   );

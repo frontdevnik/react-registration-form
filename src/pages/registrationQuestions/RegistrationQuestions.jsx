@@ -4,32 +4,20 @@ import { useDispatch } from 'react-redux';
 import MainWrapper from '../../components/mainWrapper';
 import Breadcrumbs from '../../components/navigations';
 import RegistrationQuestions from '../../components/registrationQuestions';
-import { setRegistrationInfoField } from '../../features/registrationInfo/actions';
 
-import {
-  setRegistrationQuestionsField,
-  submitRegistrationQuestionsForm,
-} from '../../features/registrationQuestions/actions';
+import { submitRegistrationQuestionsForm } from '../../features/registrationQuestions/actions';
 
 export default () => {
   const dispatch = useDispatch();
 
-  const handleInput = ({ name, answer, questionText }) => {
-    dispatch(setRegistrationQuestionsField({ name, answer, questionText }));
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    dispatch(submitRegistrationQuestionsForm());
+  const handleSubmit = (data) => {
+    Object.values(data).every((answer) => answer) &&
+      dispatch(submitRegistrationQuestionsForm(data));
   };
 
   return (
     <MainWrapper>
-      <RegistrationQuestions
-        handleSubmit={handleSubmit}
-        handleInput={handleInput}
-      />
+      <RegistrationQuestions onSubmit={handleSubmit} />
       <Breadcrumbs />
     </MainWrapper>
   );

@@ -1,28 +1,62 @@
 import React from 'react';
-import { setUpDatepicker, setUpTimepicker } from '../../globals/materialize-elements-setting';
+import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 import MainInput from '../mainInput';
+import RadioGroup from '../radioGroup';
 
-export default ({ handleSubmit }) => {
+import {
+  getBirthday,
+  getLunchtime,
+  getRadioAnswer,
+  getRange,
+} from '../../features/registrationInfo/selectors';
+
+import {
+  setUpDatepicker,
+  setUpTimepicker,
+} from '../../globals/materialize-elements-setting';
+
+export default ({ onSubmit }) => {
+  const defaultValues = {
+    birthday: useSelector(getBirthday),
+    lunchtime: useSelector(getLunchtime),
+    range: useSelector(getRange),
+    radio_answer: useSelector(getRadioAnswer),
+  };
+
+  const { register, handleSubmit } = useForm({
+    defaultValues,
+  });
+
   return (
-    <form onSubmit={handleSubmit} className="form">
+    <form onSubmit={handleSubmit(onSubmit)} className="form">
       <MainInput
         name="birthday"
-        formName="registrationInfo"
         type="text"
         className="timepicker"
         placeholder="Input birthday"
-        inputRef={setUpDatepicker}
+        register={setUpDatepicker(register)}
       />
       <MainInput
         name="lunchtime"
-        formName="registrationInfo"
         type="text"
         className="timepicker"
         placeholder="Choose lunchtime"
-        inputRef={setUpTimepicker}
+        register={setUpTimepicker(register)}
       />
-      <button className="waves-effect waves-light btn">Finish</button>
+      <p className="range-field">
+        <input ref={register} name="range" type="range" min="0" max="100" />
+      </p>
+      <h6>Choose favourite colour</h6>
+      <RadioGroup
+        values={['Yellow', 'Green', 'Red', 'Black']}
+        name="radio_answer"
+        register={register}
+      />
+      <button className="waves-effect waves-light btn waves-block">
+        Finish
+      </button>
     </form>
   );
 };

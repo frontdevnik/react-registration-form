@@ -1,18 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { setUpSelect } from '../../globals/materialize-elements-setting';
 
-export default ({ onSelect, name, formName, mainText = '', options = [] }) => {
-  const value = useSelector((state) => state[formName][name].answer);
-  const onChange = (event) => {
-    const { value, name } = event.target;
-
-    onSelect({ name, answer: value, questionText: mainText });
-  };
-
+export default ({ name, mainText = '', options = [], register, value }) => {
   return (
     <div className="input-field col s12">
-      <select onChange={onChange} name={name} ref={setUpSelect}>
+      <select name={name} ref={register}>
         <option value="" disabled selected>
           Choose your option
         </option>
@@ -20,7 +11,7 @@ export default ({ onSelect, name, formName, mainText = '', options = [] }) => {
           <option
             key={option.value}
             value={option.value}
-            selected={value && true}
+            selected={value === option.value && true}
           >
             {option.text}
           </option>
