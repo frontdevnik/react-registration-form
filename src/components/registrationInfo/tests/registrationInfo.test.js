@@ -3,15 +3,21 @@ import React from 'react';
 
 import RegistrationInfo from '../RegistrationInfo';
 
-import {
-  stubRegistrationInfoProps,
-  defaultValue,
-  registrationInfoLinks,
-} from './stubProps';
+import { stubRegistrationInfoProps, registrationInfoLinks } from './stubProps';
 
 jest.mock('react-redux', () => ({
-  useSelector: jest.fn(() => 'default value'), // defaultValue
+  useSelector: jest.fn((f) => f()),
 }));
+
+jest.mock('react-hook-form', () => ({
+  useForm: () => ({
+    register: jest.fn(),
+    handleSubmit: jest.fn((f) => f()),
+    errors: {},
+  }),
+}));
+
+jest.mock('../../../features/registrationInfo/selectors');
 
 const setUp = (props) => mount(<RegistrationInfo {...props} />);
 
@@ -30,18 +36,21 @@ describe('<RegistrationInfo />', () => {
 
   it('should call handleSubmit on submit form', () => {
     form.simulate('submit');
-    expect(stubRegistrationInfoProps.handleSubmit).toHaveBeenCalled();
+    expect(stubRegistrationInfoProps.onSubmit).toHaveBeenCalled();
   });
 
   it('should all inputs render correctly', () => {
     component.find('input').forEach((node, i) => {
+      if (!registrationInfoLinks[i]) {
+        return;
+      }
+
       const nodeProps = node.props();
       const { name, type, placeholder } = registrationInfoLinks[i];
 
       expect(nodeProps.name).toBe(name);
       expect(nodeProps.type).toBe(type);
       expect(nodeProps.id).toBe(name);
-      expect(nodeProps.value).toBe(defaultValue);
       expect(nodeProps.placeholder).toBe(placeholder);
     });
   });
@@ -49,6 +58,6 @@ describe('<RegistrationInfo />', () => {
   it('should call submitForm on button click', () => {
     const button = component.find('button');
     button.simulate('click');
-    expect(stubRegistrationInfoProps.handleSubmit).toHaveBeenCalled();
-  })
+    expect(stubRegistrationInfoProps.onSubmit).toHaveBeenCalled();
+  });
 });

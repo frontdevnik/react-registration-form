@@ -1,48 +1,35 @@
 import reducer from '../reducers/index';
 import { initialState } from '../reducers/index';
-import { setRegistrationField, submitRegistrationForm } from '../actions';
-
-import { removeFieldFromObject } from '../../../helpers/removeFieldFromObject';
+import { differentPasswords, submitRegistrationForm } from '../actions';
 
 describe('registration reducer', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
   });
 
-  it('should handle SET_REGISTRATION_FIELD', () => {
-    const payload = {
-      name: 'test',
-      value: 'test',
-      isRequired: true,
-      errorMessage: '',
-      isValid: true,
-    };
-    const payloadWithoutProp = removeFieldFromObject(payload, 'name');
-
-    const callReducer = reducer({}, setRegistrationField(payload));
-    const changedState = { [payload.name]: payloadWithoutProp };
+  it('should handle DIFFERENT_PASSWORDS', () => {
+    const callReducer = reducer({}, differentPasswords());
+    const changedState = { isDiffPasswords: true };
 
     expect(callReducer).toEqual(changedState);
   });
 
   it('should handle SUBMIT_REGISTRATION_FORM', () => {
-    const initialState = {
-      first_name: {
-        value: '',
-        isRequired: false,
-        errorMessage: '',
-        isValid: true,
-      },
-      last_name: {
-        value: '',
-        isRequired: false,
-        errorMessage: '',
-        isValid: true,
-      },
-      isFormValid: false,
+    const payload = {
+      first_name: 'first_name',
+      phone: 'phone',
+      last_name: 'last_name',
+      email: 'email',
+      password: 'password',
+      repeat_password: 'repeat_password',
     };
-    const callReducer = reducer(initialState, submitRegistrationForm());
-    const changedState = { ...initialState, isFormValid: true };
+    const callReducer = reducer(initialState, submitRegistrationForm(payload));
+    const changedState = {
+      ...initialState,
+      ...payload,
+      isFormValid: true,
+      isDiffPasswords: false,
+    };
 
     expect(callReducer).toEqual(changedState);
   });

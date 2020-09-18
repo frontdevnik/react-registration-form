@@ -14,5 +14,3 @@ export const stubSelectProps = {
     },
   ],
 };
-
-export const mockedUseSelectorValue = 'value';

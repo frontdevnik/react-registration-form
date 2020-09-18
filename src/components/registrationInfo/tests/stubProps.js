@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const stubRegistrationInfoProps = {
-    handleSubmit: jest.fn(),
+    onSubmit: jest.fn(),
 };
 
 export const defaultValue = 'default value';

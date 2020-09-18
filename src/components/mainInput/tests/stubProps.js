@@ -1,15 +1,12 @@
 export const stubInputProps = {
   type: 'text',
   name: 'test',
-  formName: 'test',
+  required: true,
   className: 'active',
   labelText: 'label',
   placeholder: 'placeholder',
-  isRequired: true,
-  validation: '',
+  pattern: '',
   errorMessage: 'error',
-  onChange: jest.fn(),
-  inputRef: jest.fn(),
+  register: jest.fn(),
+  error: 'error',
 };
-
-export const mockedUseSelectorValue = 'value';

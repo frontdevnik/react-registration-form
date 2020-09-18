@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RadioGroup /> should render correctly 1`] = `"<label><input name=\\"values\\" type=\\"radio\\" value=\\"value1\\"><span>value1</span></label><label><input name=\\"values\\" type=\\"radio\\" value=\\"value2\\"><span>value2</span></label>"`;

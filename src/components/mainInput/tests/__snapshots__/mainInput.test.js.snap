@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<MainInput /> should render correctly 1`] = `"<div class=\\"input-field col s12 active\\"><input type=\\"text\\" value=\\"value\\" name=\\"test\\" id=\\"test\\" required=\\"\\" placeholder=\\"placeholder\\" class=\\"\\"/><label for=\\"test\\">label</label></div>"`;
+exports[`<MainInput /> should render correctly 1`] = `"<div class=\\"input-field col s12 active\\"><input type=\\"text\\" name=\\"test\\" id=\\"test\\" placeholder=\\"placeholder\\" class=\\"invalid\\"/><label for=\\"test\\">label</label><span class=\\"helper-text\\" data-error=\\"error\\">error</span></div>"`;

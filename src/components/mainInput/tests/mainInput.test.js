@@ -1,18 +1,8 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 
 import MainInput from '../MainInput';
 
-import { stubInputProps, mockedUseSelectorValue } from './stubProps';
-
-jest.mock('react-redux', () => ({
-  useSelector: jest.fn(),
-}));
-
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useState: jest.fn((initValue) => [initValue, jest.fn()]),
-}));
+import { stubInputProps } from './stubProps';
 
 const setUp = (props) => shallow(<MainInput {...props} />);
 
@@ -20,9 +10,6 @@ describe('<MainInput />', () => {
   let component;
 
   beforeEach(() => {
-    useSelector.mockReturnValue(mockedUseSelectorValue);
-    useState.mockImplementation((init) => [init, jest.fn()]);
-
     component = setUp(stubInputProps);
   });
 
@@ -41,18 +28,8 @@ describe('<MainInput />', () => {
     let input;
 
     beforeEach(() => {
-      useState.mockImplementation((init) => [true, jest.fn()]);
-
       component = setUp(stubInputProps);
       input = component.find('input');
-    });
-
-    afterEach(() => {
-      jest.clearAllMocks();
-    });
-
-    it('should input has correct value', () => {
-      expect(input.props().value).toBe(mockedUseSelectorValue);
     });
 
     it('should input has correct name', () => {
@@ -68,8 +45,7 @@ describe('<MainInput />', () => {
     });
 
     it('should input has valid class', () => {
-      useState.mockImplementation(() => [false, jest.fn()]);
-      component = setUp(stubInputProps);
+      component = setUp({ ...stubInputProps, error: '' });
       input = component.find('input');
 
       expect(input.hasClass('')).toBeTruthy();
@@ -89,8 +65,6 @@ describe('<MainInput />', () => {
   });
 
   it('should render helper-text with error state', () => {
-    useState.mockReturnValue([true, jest.fn()]);
-    const component = setUp(stubInputProps);
-    expect(component.find('span').text()).toBe('');
+    expect(component.find('span').text()).toBe(stubInputProps.error);
   });
 });

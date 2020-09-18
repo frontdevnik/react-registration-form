@@ -1,29 +1,28 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import createMockStore from 'redux-mock-store';
-import enzyme, { shallow, mount, render } from 'enzyme';
 
 import Registration from '../Registration';
 
 import {
   stubRegistrationProps,
-  defaultValue,
-  onChange,
   registrationLinks,
 } from './stubProps';
 
-// const mockStore = createMockStore();
-
 jest.mock('react-redux', () => ({
-  useSelector: jest.fn(() => 'default value'), // defaultValue
+  useSelector: jest.fn((f) => f()),
 }));
 
-const setUp = (props) =>
-  mount(
-    // <Provider store={mockStore()}>
-    <Registration {...props} />
-    //</Provider>
-  );
+jest.mock('react-hook-form', () => ({
+  useForm: () => ({
+    register: jest.fn(),
+    handleSubmit: jest.fn((f) => f()),
+    reset: jest.fn(),
+    errors: {},
+  }),
+}));
+
+jest.mock('../../../features/registration/selectors');
+
+const setUp = (props) => mount(<Registration {...props} />);
 
 describe('<Registration />', () => {
   let component;
@@ -44,27 +43,35 @@ describe('<Registration />', () => {
 
   it('should call handleSubmit on submit form', () => {
     form.simulate('submit');
-    expect(stubRegistrationProps.handleSubmit).toHaveBeenCalled();
+    expect(stubRegistrationProps.onSubmit).toHaveBeenCalled();
   });
 
   it('should all inputs render correctly', () => {
     component.find('input').forEach((node, i) => {
+      if (!registrationLinks[i]) {
+        return;
+      }
+
       const nodeProps = node.props();
-      const {name, type, placeholder } = registrationLinks[i];
+      const { name, type, placeholder } = registrationLinks[i];
 
       expect(nodeProps.name).toBe(name);
       expect(nodeProps.type).toBe(type);
       expect(nodeProps.id).toBe(name);
-      expect(nodeProps.value).toBe(defaultValue);
       expect(nodeProps.placeholder).toBe(placeholder);
       node.simulate('change');
-      expect(stubRegistrationProps.handleInput).toHaveBeenCalled();
+      expect(stubRegistrationProps.onSubmit).toHaveBeenCalled();
     });
   });
 
   it('should call submitForm on button click', () => {
     const button = component.find('button');
     button.simulate('click');
-    expect(stubRegistrationProps.handleSubmit).toHaveBeenCalled();
-  })
+    expect(stubRegistrationProps.onSubmit).toHaveBeenCalled();
+  });
+
+  it('should render reset button', () => {
+    const resetInput = component.find('input').last();
+    expect(resetInput.props().value).toBe('reset');
+  });
 });

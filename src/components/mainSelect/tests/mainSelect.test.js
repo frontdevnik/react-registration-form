@@ -1,11 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import MainSelect from '../MainSelect';
-import { mockedUseSelectorValue, stubSelectProps } from './stubProps';
 
-jest.mock('react-redux', () => ({
-  useSelector: jest.fn(),
-}));
+import MainSelect from '../MainSelect';
+
+import { stubSelectProps } from './stubProps';
 
 const setUp = (props) => shallow(<MainSelect {...props} />);
 
@@ -14,7 +11,6 @@ describe('<MainSelect />', () => {
   let options;
 
   beforeEach(() => {
-    useSelector.mockReturnValue(mockedUseSelectorValue);
     component = setUp(stubSelectProps);
     options = component.find('option');
   });

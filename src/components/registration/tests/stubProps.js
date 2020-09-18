@@ -6,17 +6,20 @@ import {
   INVALID_EMAIL,
   INVALID_NAME,
   INVALID_PASSWORD,
+  INVALID_PHONE,
 } from '../../../constants/validation-messages';
 import {
   EMAIL_INPUT,
   NAME_INPUT,
   PASSWORD_INPUT,
+  PHONE_INPUT,
 } from '../../../constants/validation-rules';
 
 export const stubRegistrationProps = {
-  handleSubmit: jest.fn(),
-  handleInput: jest.fn(),
+  onSubmit: jest.fn(),
 };
+
+export const diffPasswordText = "Passwords don't match";
 
 export const defaultValue = 'default value';
 export const onChange = stubRegistrationProps.handleInput;
@@ -44,6 +47,14 @@ export const registrationLinks = [
     isRequired: true,
     validation: EMAIL_INPUT,
     errorMessage: INVALID_EMAIL,
+  },
+  {
+    name: 'phone',
+    type: 'tel',
+    placeholder: 'Phone Number',
+    isRequired: true,
+    validation: PHONE_INPUT,
+    errorMessage: INVALID_PHONE,
   },
   {
     name: 'password',
